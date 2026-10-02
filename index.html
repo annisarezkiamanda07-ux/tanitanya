@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TaniTanya - Forum tanya jawab pertanian untuk petani dan mahasiswa.">
+  <title>TaniTanya — Forum Pertanian</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="#" onclick="showPage('home')"><span class="brand-mark">🌱</span><span>Tani<span>Tanya</span></span></a>
+      <nav>
+        <button onclick="showPage('home')">Beranda</button>
+        <button onclick="showPage('questions')">Pertanyaan</button>
+        <button class="nav-ask" onclick="showPage('ask')">+ Ajukan Pertanyaan</button>
+      </nav>
+      <button class="profile" id="profileBtn" onclick="toggleProfile()">Masuk</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="homePage" class="page active">
+      <div class="hero">
+        <div class="container hero-grid">
+          <div>
+            <span class="eyebrow">FORUM DIGITAL PERTANIAN</span>
+            <h1>Temukan jawaban,<br><em>tumbuhkan solusi.</em></h1>
+            <p class="hero-copy">Tempat bertanya, berbagi pengalaman, dan menemukan solusi praktis seputar pertanian bersama komunitas.</p>
+            <div class="hero-actions">
+              <button class="primary" onclick="showPage('ask')">Ajukan Pertanyaan →</button>
+              <button class="secondary" onclick="showPage('questions')">Jelajahi Pertanyaan</button>
+            </div>
+            <div class="stats">
+              <div><strong id="statQuestions">0</strong><span>Pertanyaan</span></div>
+              <div><strong id="statAnswers">0</strong><span>Jawaban</span></div>
+              <div><strong>24/7</strong><span>Akses</span></div>
+            </div>
+          </div>
+          <div class="hero-art">
+            <div class="sun"></div>
+            <div class="hill hill1"></div><div class="hill hill2"></div>
+            <div class="field f1"></div><div class="field f2"></div><div class="field f3"></div>
+            <div class="farmer">👩‍🌾</div>
+            <div class="plant p1">🌱</div><div class="plant p2">🌿</div><div class="plant p3">🌱</div>
+          </div>
+        </div>
+      </div>
+
+      <section class="container section">
+        <div class="section-head"><div><span class="eyebrow">TERBARU</span><h2>Pertanyaan Terbaru</h2></div><button class="text-btn" onclick="showPage('questions')">Lihat semua →</button></div>
+        <div id="latestList" class="cards"></div>
+      </section>
+
+      <section class="container tips">
+        <div><span class="eyebrow">KENAPA TANITANYA?</span><h2>Belajar dari pengalaman<br>petani lain.</h2></div>
+        <div class="tip-grid">
+          <article><span>💬</span><h3>Diskusi Terbuka</h3><p>Ajukan pertanyaan dan dapatkan jawaban dari komunitas.</p></article>
+          <article><span>📚</span><h3>Pengetahuan Praktis</h3><p>Temukan pengalaman lapangan yang mudah diterapkan.</p></article>
+          <article><span>🌾</span><h3>Berbasis Komunitas</h3><p>Bangun jejaring dan berbagi solusi pertanian.</p></article>
+        </div>
+      </section>
+    </section>
+
+    <section id="questionsPage" class="page">
+      <div class="container page-head"><span class="eyebrow">KOMUNITAS</span><h1>Semua Pertanyaan</h1><p>Cari diskusi yang sesuai dengan kebutuhanmu.</p>
+        <div class="search"><span>⌕</span><input id="searchInput" placeholder="Cari pertanyaan..." oninput="renderQuestions()"></div>
+      </div>
+      <div class="container content-grid">
+        <div id="questionList" class="question-list"></div>
+        <aside class="side-card"><h3>Topik Populer</h3><button onclick="filterTag('Hama & Penyakit')">🐛 Hama & Penyakit</button><button onclick="filterTag('Budidaya')">🌱 Budidaya</button><button onclick="filterTag('Pupuk')">🧪 Pupuk</button><button onclick="filterTag('Teknologi')">📱 Teknologi</button></aside>
+      </div>
+    </section>
+
+    <section id="detailPage" class="page">
+      <div class="container detail-wrap"><button class="back" onclick="showPage('questions')">← Kembali ke pertanyaan</button><div id="detail"></div></div>
+    </section>
+
+    <section id="askPage" class="page">
+      <div class="container form-wrap"><span class="eyebrow">BERBAGI PENGETAHUAN</span><h1>Ajukan Pertanyaan</h1><p class="muted">Ceritakan masalah pertanianmu agar komunitas dapat membantu.</p>
+        <form id="askForm" onsubmit="submitQuestion(event)">
+          <label>Judul pertanyaan<input id="qTitle" required maxlength="120" placeholder="Contoh: Daun cabai menguning, apa penyebabnya?"></label>
+          <label>Topik<select id="qTag"><option>Budidaya</option><option>Hama & Penyakit</option><option>Pupuk</option><option>Teknologi</option><option>Pasar</option></select></label>
+          <label>Deskripsi<textarea id="qBody" required rows="7" placeholder="Jelaskan kondisi tanaman, lokasi, umur tanaman, dan gejala yang kamu temukan..."></textarea></label>
+          <label>Foto (opsional)<input id="qImage" type="file" accept="image/*" onchange="previewImage(event)"><small>Format JPG/PNG. Demo ini menyimpan data di browser.</small></label>
+          <div id="imagePreview"></div>
+          <div class="form-actions"><button type="button" class="secondary" onclick="showPage('home')">Batal</button><button class="primary" type="submit">Publikasikan Pertanyaan</button></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="container footer-grid"><div><a class="brand" href="#"><span class="brand-mark">🌱</span><span>Tani<span>Tanya</span></span></a><p>Ruang digital untuk bertanya dan berbagi solusi pertanian.</p></div><div><b>TaniTanya</b><p>Beranda</p><p>Pertanyaan</p></div><div><b>Catatan</b><p>Website tugas berbasis AI.</p><p>Data demo tersimpan lokal.</p></div></div></footer>
+
+  <div id="toast" class="toast"></div>
+  <script src="script.js"></script>
+</body>
+</html>
